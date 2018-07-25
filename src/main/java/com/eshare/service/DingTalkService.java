@@ -83,7 +83,7 @@ public class DingTalkService {
                 List<Forecast> forecasts = weatherBean.getData().getForecast();
                 for (Forecast forecast : forecasts) {
                     String weatherInfo = String.format("> 【%s:】 %s，%s，%s，%s，%s，%s", forecast.getDate(), forecast.getFl(), forecast.getFx(), forecast.getHigh(), forecast.getLow(), forecast.getNotice(), forecast.getType());
-                    sb.append(weatherInfo).append("\n").append("<br/>").append("\n");
+                    sb.append(weatherInfo).append("\n").append("<br/>").append("\n\n");
                 }
                 content = content.replace("${forecast}", sb.toString()).replace("${publishTime}", DateUtils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
             }
