@@ -1,4 +1,4 @@
-# eshare-doge-tool
+# eshare-dingtalk-tool
 # **钉钉日报催收小工具,具备天气预告功能,自动生成钉钉催收通知,效果如下:**
 
 ***
