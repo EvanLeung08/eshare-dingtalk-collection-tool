@@ -1,0 +1,18 @@
+#### 晚报收集女神
+> @各位leader,记得发日报啦,10点前统一收集!!!
+
+<br/>
+
+> 天气乱报时间，温馨提示:
+
+<br/>
+
+>${today.forecast}
+
+<br/>
+
+>${tomorrow.forecast}
+
+![avatar](http://is3.mzstatic.com/image/pf/us/r30/Purple7/v4/29/17/96/2917960c-4534-e677-bcc1-f5d47bf8f070/pr_source.png)
+
+> ###### 发布时间：${publishTime} [天气](http://www.weather.com.cn) 
