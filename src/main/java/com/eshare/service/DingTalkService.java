@@ -21,12 +21,15 @@ import java.util.List;
  * 钉钉信息服务
  *
  * @author liangyh
- * @email liangyuhua@ppmoney.com
  * @date 2018/7/25
  */
 @Slf4j
 @Service
 public class DingTalkService {
+    /**
+     * weather模板路径
+     */
+    private final static String WEATHER_TEMPLATE_PATH = "classpath:templates/weatherTemplate";
 
     @Autowired
     WeatherService weatherService;
@@ -36,7 +39,9 @@ public class DingTalkService {
      */
     public void sendWeatherMessage() {
         DingtalkMessageBean messageBean = buildWeatherMessageBean();
-        sendMessage(JSON.toJSONString(messageBean));
+        //自定义钉钉机器人测试URL
+        String dingTalkUrl = "";
+        sendMessage(dingTalkUrl,JSON.toJSONString(messageBean));
     }
 
     /**
@@ -48,9 +53,9 @@ public class DingTalkService {
         DingtalkMessageBean messageBean = new DingtalkMessageBean();
         //初始化Markdown
         Markdown markdown = new Markdown();
-        String content = FileUtil.readFileFromResource("classpath:templates/weatherTemplate");
+        String content = FileUtil.readFileFromResource(WEATHER_TEMPLATE_PATH);
         content = parseWeatherDataAndFillUpMarkdown(content);
-        markdown.setTitle("每天日报手机提醒");
+        markdown.setTitle("每天日报收集提醒");
         markdown.setText(content);
         messageBean.setMarkdown(markdown);
         //初始化At
@@ -66,23 +71,21 @@ public class DingTalkService {
 
     /**
      * 解析天气数据并填充Markdown内容
+     *
      * @param content
      * @return
      */
     public String parseWeatherDataAndFillUpMarkdown(String content) {
         WeatherBean weatherBean = weatherService.callRemoteWeatherApi("广州");
+        StringBuilder sb = new StringBuilder();
         if (weatherBean != null) {
             if (weatherBean.getData() != null && !weatherBean.getData().getForecast().isEmpty()) {
                 List<Forecast> forecasts = weatherBean.getData().getForecast();
-                Forecast todayForecast = forecasts.get(0);
-                Forecast tomorrowForecast = forecasts.get(1);
-                if (todayForecast != null) {
-                    content = content.replace("${today.forecast}", String.format("【今天:】 %s,%s，%s，%s，%s，%s，%s", todayForecast.getDate(), todayForecast.getFl(), todayForecast.getFx(), todayForecast.getHigh(), todayForecast.getLow(), todayForecast.getNotice(), todayForecast.getType()));
+                for (Forecast forecast : forecasts) {
+                    String weatherInfo = String.format("> 【%s:】 %s，%s，%s，%s，%s，%s", forecast.getDate(), forecast.getFl(), forecast.getFx(), forecast.getHigh(), forecast.getLow(), forecast.getNotice(), forecast.getType());
+                    sb.append(weatherInfo).append("\n").append("<br/>").append("\n");
                 }
-                if (tomorrowForecast != null) {
-                    content = content.replace("${tomorrow.forecast}", String.format("【明天:】 %s,%s，%s，%s，%s，%s，%s", tomorrowForecast.getDate(), tomorrowForecast.getFl(), tomorrowForecast.getFx(), tomorrowForecast.getHigh(), tomorrowForecast.getLow(), tomorrowForecast.getNotice(), tomorrowForecast.getType()));
-                }
-                content = content.replace("${publishTime}", DateUtils.formatDate(new Date(),"yyyy-MM-dd HH:mm:ss"));
+                content = content.replace("${forecast}", sb.toString()).replace("${publishTime}", DateUtils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
             }
         }
         return content;
@@ -91,11 +94,11 @@ public class DingTalkService {
 
     /**
      * 发钉钉消息
-     * @param message
+     *
+     * @param url     钉钉机器人发送URL
+     * @param message 发送信息
      */
-    public void sendMessage(String message) {
-        String url = "https://oapi.dingtalk.com/robot/send?access_token=15bf528a66b4753e5b09e90eb9f27941b27ccba39946f848d6937bb7b455711c";
-        //String url="https://oapi.dingtalk.com/robot/send?access_token=97a0b3dd5dd05366c83420fc1837ec63bcce6b1c3978cdfc7e2d5d122581f0f1";
+    public void sendMessage(String url, String message) {
         HttpUtil.doPost(url, message);
     }
 

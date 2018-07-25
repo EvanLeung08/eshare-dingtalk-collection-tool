@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * 天气服务类
  *
  * @author liangyh
- * @email liangyuhua@ppmoney.com
+ *
  * @date 2018/7/25
  */
 @Service

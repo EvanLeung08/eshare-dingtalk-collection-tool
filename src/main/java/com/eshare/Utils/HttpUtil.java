@@ -18,7 +18,7 @@ import java.net.URI;
  * HttpUtil
  *
  * @author liangyh
- * @email liangyuhua@ppmoney.com
+ *
  * @date 2018/7/25
  */
 public class HttpUtil {
@@ -27,8 +27,6 @@ public class HttpUtil {
     public static String doPost(String url, String message) {
         CloseableHttpClient httpClient = null;
         CloseableHttpResponse reponse = null;
-        // String url = "https://oapi.dingtalk.com/robot/send?access_token=15bf528a66b4753e5b09e90eb9f27941b27ccba39946f848d6937bb7b455711c";
-        // String url = "https://oapi.dingtalk.com/robot/send?access_token=cb08f25b9d6276c7e556ac42b7448990882d410266a2f1faa5545e242acbc080";
         URIBuilder builder;
         URI uri;
         String result = "";
@@ -71,7 +69,6 @@ public class HttpUtil {
         CloseableHttpResponse reponse = null;
         URIBuilder builder;
         URI uri;
-        //WeatherBean weatherData = null;
         String result = "";
         try {
             builder = new URIBuilder(url);
@@ -83,8 +80,6 @@ public class HttpUtil {
             System.out.println(reponse.getStatusLine().getStatusCode() + "\n");
             HttpEntity httpEntity = reponse.getEntity();
             result = EntityUtils.toString(httpEntity, "UTF-8");
-            //JSONObject jsonObject = (JSONObject) JSONObject.parse(responseContent);
-            //weatherData = JSON.toJavaObject(jsonObject, WeatherBean.class);
             System.out.println(result);
         } catch (Exception ex) {
             ex.printStackTrace();

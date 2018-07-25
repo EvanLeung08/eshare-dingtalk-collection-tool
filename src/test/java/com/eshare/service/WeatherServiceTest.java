@@ -19,7 +19,7 @@ import java.net.URI;
 /**
  * User: liangyh
  * Date: 2018/7/25
- * email: liangyuhua@ppmoney.com
+ * email: liangyuhua@
  */
 public class WeatherServiceTest {
 

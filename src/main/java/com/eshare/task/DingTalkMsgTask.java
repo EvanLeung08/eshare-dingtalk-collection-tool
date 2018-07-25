@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 钉钉消息任务
  *
  * @author liangyh
- * @email liangyuhua@ppmoney.com
+ *
  * @date 2018/7/25
  */
 
@@ -26,7 +26,6 @@ public class DingTalkMsgTask {
     @Scheduled(cron = "${job.dingtalk.schedule}")
     private void process() {
         System.out.println("this is scheduler task runing  " + (count++));
-
         dingTalkService.sendWeatherMessage();
     }
 }

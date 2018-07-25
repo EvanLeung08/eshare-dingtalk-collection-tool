@@ -7,11 +7,7 @@
 
 <br/>
 
->${today.forecast}
-
-<br/>
-
->${tomorrow.forecast}
+${forecast}
 
 ![avatar](http://is3.mzstatic.com/image/pf/us/r30/Purple7/v4/29/17/96/2917960c-4534-e677-bcc1-f5d47bf8f070/pr_source.png)
 
