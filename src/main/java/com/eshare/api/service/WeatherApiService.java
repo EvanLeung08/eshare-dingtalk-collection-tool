@@ -1,10 +1,10 @@
-package com.eshare.service;
+package com.eshare.api.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eshare.Utils.HttpUtil;
+import com.eshare.annotation.ApiService;
 import com.eshare.model.weather.WeatherBean;
-import org.springframework.stereotype.Service;
 
 /**
  * 天气服务类
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
  *
  * @date 2018/7/25
  */
-@Service
-public class WeatherService {
+@ApiService
+public class WeatherApiService {
 
     /**
      * 远程调用天气API
@@ -25,7 +25,6 @@ public class WeatherService {
         String url = "https://www.sojson.com/open/api/weather/json.shtml?city="+city;
         String result = HttpUtil.doGet(url);
         JSONObject jsonObject = (JSONObject) JSONObject.parse(result);
-
         return JSON.toJavaObject(jsonObject, WeatherBean.class);
     }
 

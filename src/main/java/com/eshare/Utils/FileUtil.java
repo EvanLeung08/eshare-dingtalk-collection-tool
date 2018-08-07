@@ -1,29 +1,26 @@
 package com.eshare.Utils;
 
-import org.springframework.util.ResourceUtils;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 
 /**
  * FileUtil
  *
  * @author liangyh
- *
  * @date 2018/7/25
  */
 public class FileUtil {
 
     /**
      * 从资源目录读取文件内容
+     *
      * @param resourcePath
      * @return
      */
     public static String readFileFromResource(String resourcePath) {
         try {
-            File file = ResourceUtils.getFile(resourcePath);
+            URL url = FileUtil.class.getClassLoader().getResource(resourcePath);
+            File file = new File(url.getFile());
             if (file.exists()) {
                 return text2String(file);
             }
@@ -35,26 +32,37 @@ public class FileUtil {
 
     /**
      * 转换文件内容为字符串
+     *
      * @param file
      * @return
      */
     public static String text2String(File file) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         BufferedReader reader = null;
-        FileReader fr = null;
+        InputStreamReader read = null;
+        FileInputStream fi = null;
         try {
-            fr = new FileReader(file);
-            reader = new BufferedReader(fr);
+            fi = new FileInputStream(file);
+            read = new InputStreamReader(
+                    fi, "utf-8");
+            reader = new BufferedReader(read);
             String s;
             while ((s = reader.readLine()) != null) {
-                result.append(System.lineSeparator() + s);
+                sb.append(System.lineSeparator() + s);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (fr != null) {
+            if (fi != null) {
                 try {
-                    fr.close();
+                    fi.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (read != null) {
+                try {
+                    read.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -67,6 +75,6 @@ public class FileUtil {
                 }
             }
         }
-        return result.toString();
+        return sb.toString();
     }
 }
