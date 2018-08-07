@@ -7,6 +7,7 @@ package com.eshare.service;
  * @email
  * @date 2018/7/26
  */
+@FunctionalInterface
 public interface DingTalkRobotMessageService {
 
     void sendMessage(String url, String message);

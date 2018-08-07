@@ -1,5 +1,8 @@
 package com.eshare.service;
 
+import java.util.Objects;
+import java.util.function.Consumer;
+
 /**
  * DingTalkMessage
  *
@@ -7,7 +10,9 @@ package com.eshare.service;
  * @email
  * @date 2018/7/26
  */
-public interface DingTalkMessage {
+@FunctionalInterface
+public interface DingTalkMessage<T> {
 
-    String builderDingTalkMessage();
+    abstract String builderDingTalkMessage();
+
 }

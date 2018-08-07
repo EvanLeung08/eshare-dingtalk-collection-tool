@@ -45,6 +45,7 @@ public abstract class AbstractDingTalkRobotMessageService extends DingTalkRobotM
         sendMessage(url, dingTalkMessage.builderDingTalkMessage());
     }
 
+
     /**
      * 构造天气信息实体
      *
